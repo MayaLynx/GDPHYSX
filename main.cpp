@@ -10,12 +10,19 @@
 
 #include "main.h"
 #include "model3D/model3D.h"
+#include "Physics/PhysicsParticle.h"
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 int main(void)
 {
+    // Time in between frames
+    constexpr std::chrono::nanoseconds timestep(16ms);
+
     GLFWwindow* window;
 
     /* Initialize the library */
@@ -84,9 +91,39 @@ int main(void)
     model3D* sphere = new model3D("3D/sphere.obj", glm::vec3(0.f, 0.f, 0.f), shaderProg);
     sphere->setScale(100.f, 100.f, 100.f);
 
+    PhysicsParticle* particle = new PhysicsParticle();
+    particle->velocity = glm::vec3(200.f, 0.f, 0.f);
+
+    using clock = std::chrono::high_resolution_clock;
+    auto curr_time = clock::now();
+    auto prev_time = curr_time;
+    std::chrono::nanoseconds curr_ns(0);
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
+        glfwPollEvents();
+
+        curr_time = clock::now();
+        auto dur = std::chrono::duration_cast<std::chrono::nanoseconds>(curr_time - prev_time);
+        prev_time = curr_time; 
+
+        curr_ns += dur;
+        if (curr_ns >= timestep)
+        {
+            constexpr float timestep_sec = timestep.count() / (float)(1E09); // Convert ns -> secs
+
+            curr_ns -= timestep;
+
+            std::cout << "Physics update" << std::endl;
+            if (particle->position[0] >= 400.f || particle->position[0] <= -400.f)
+            {
+                particle->velocity *= glm::vec3(-1.f, 0.f, 0.f);
+            }
+            particle->update(timestep_sec);
+        }
+        std::cout << "Normal update" << std::endl;
+        
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -139,6 +176,7 @@ int main(void)
             glm::value_ptr(viewMatrix));
 
         // Draw object
+        sphere->updatePosition(particle->position);
         sphere->draw();
 
         /* Swap front and back buffers */

@@ -12,7 +12,7 @@
 class model3D
 {
 private:
-	float x, y, z;
+	glm::vec3 position;
 	float scale_x, scale_y, scale_z;
 	float axis_x, axis_y, axis_z;
 	float theta;
@@ -24,6 +24,7 @@ private:
 
 public:
 	model3D(std::string path, glm::vec3 position, GLuint shader);
+	void updatePosition(glm::vec3 newPos);
 	void translate();
 	void setScale(float x, float y, float z);
 	void scale();

@@ -3,9 +3,7 @@
 
 model3D::model3D(std::string path, glm::vec3 position, GLuint shader)
     : path{ path }
-    , x{ position[0] }
-    , y{ position[1] }
-    , z{ position[2] }
+    , position{ position }
     , shader{ shader }
 {
     scale_x = scale_y = scale_z = 1.f;
@@ -76,11 +74,16 @@ model3D::model3D(std::string path, glm::vec3 position, GLuint shader)
     // std::cout << "Object created" << std::endl;
 }
 
+void model3D::updatePosition(glm::vec3 newPos)
+{
+    position = newPos;
+}
+
 void model3D::translate()
 {
     transformation_matrix = glm::translate(
         glm::mat4(1.0f),
-        glm::vec3(x, y, z)
+        glm::vec3(position)
 
     );
 
