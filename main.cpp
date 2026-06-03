@@ -11,6 +11,7 @@
 #include "main.h"
 #include "model3D/model3D.h"
 #include "Physics/PhysicsParticle.h"
+#include "Physics/PhysicsWorld.h"
 #include <string>
 #include <iostream>
 #include <fstream>
