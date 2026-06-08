@@ -17,6 +17,7 @@ private:
 	float axis_x, axis_y, axis_z;
 	float theta;
 	std::string path;
+	glm::vec3 color;
 	GLuint VAO, VBO, EBO;
 	GLuint shader;
 	std::vector<GLuint> mesh_indices;
@@ -24,6 +25,7 @@ private:
 
 public:
 	model3D(std::string path, glm::vec3 position, GLuint shader);
+	void setColor(glm::vec3 newColor);
 	void updatePosition(glm::vec3 newPos);
 	void translate();
 	void setScale(float x, float y, float z);

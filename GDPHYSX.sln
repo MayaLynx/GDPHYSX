@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GDPHYSX", "GDPHYSX.vcxproj"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GDPHYSX-PC01", "..\GDPHYSX-PC01\GDPHYSX-PC01.vcxproj", "{4BD0CB31-7840-4673-80A7-E692627391A0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GDPHYSX-Assignment03", "..\GDPHYSX-Assignment03\GDPHYSX-Assignment03.vcxproj", "{70106DB7-C9F4-4E0F-BF07-6C9A87B27D47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{4BD0CB31-7840-4673-80A7-E692627391A0}.Release|x64.Build.0 = Release|x64
 		{4BD0CB31-7840-4673-80A7-E692627391A0}.Release|x86.ActiveCfg = Release|Win32
 		{4BD0CB31-7840-4673-80A7-E692627391A0}.Release|x86.Build.0 = Release|Win32
+		{70106DB7-C9F4-4E0F-BF07-6C9A87B27D47}.Debug|x64.ActiveCfg = Debug|x64
+		{70106DB7-C9F4-4E0F-BF07-6C9A87B27D47}.Debug|x64.Build.0 = Debug|x64
+		{70106DB7-C9F4-4E0F-BF07-6C9A87B27D47}.Debug|x86.ActiveCfg = Debug|Win32
+		{70106DB7-C9F4-4E0F-BF07-6C9A87B27D47}.Debug|x86.Build.0 = Debug|Win32
+		{70106DB7-C9F4-4E0F-BF07-6C9A87B27D47}.Release|x64.ActiveCfg = Release|x64
+		{70106DB7-C9F4-4E0F-BF07-6C9A87B27D47}.Release|x64.Build.0 = Release|x64
+		{70106DB7-C9F4-4E0F-BF07-6C9A87B27D47}.Release|x86.ActiveCfg = Release|Win32
+		{70106DB7-C9F4-4E0F-BF07-6C9A87B27D47}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

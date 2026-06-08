@@ -129,6 +129,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Physics\Springs\AnchoredSpring.cpp" />
+    <ClCompile Include="Physics\ForceGenerator\DragForceGenerator.cpp" />
+    <ClCompile Include="Physics\ForceGenerator\GravityForceGenerator.cpp" />
+    <ClCompile Include="Physics\ForceGenerator\ForceRegistry.cpp" />
+    <ClCompile Include="Physics\ForceGenerator\ForceGenerator.cpp" />
     <ClCompile Include="model3D\model3D.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
@@ -136,6 +141,11 @@
     <ClCompile Include="Physics\PhysicsParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Physics\Springs\AnchoredSpring.h" />
+    <ClInclude Include="Physics\ForceGenerator\DragForceGenerator.h" />
+    <ClInclude Include="Physics\ForceGenerator\GravityForceGenerator.h" />
+    <ClInclude Include="Physics\ForceGenerator\ForceRegistry.h" />
+    <ClInclude Include="Physics\ForceGenerator\ForceGenerator.h" />
     <ClInclude Include="model3D\model3D.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Physics\PhysicsWorld.h" />

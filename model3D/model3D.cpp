@@ -10,6 +10,7 @@ model3D::model3D(std::string path, glm::vec3 position, GLuint shader)
     axis_x = axis_y = 0.f;
     axis_z = 1.f;
     theta = 0.f;
+    color = glm::vec3(1.f, 1.f, 1.f);
 
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> material;
@@ -72,6 +73,11 @@ model3D::model3D(std::string path, glm::vec3 position, GLuint shader)
     transformation_matrix = glm::mat4(1.0f);
 
     // std::cout << "Object created" << std::endl;
+}
+
+void model3D::setColor(glm::vec3 newColor)
+{
+    color = newColor;
 }
 
 void model3D::updatePosition(glm::vec3 newPos)
@@ -137,6 +143,9 @@ void model3D::draw()
     glBindVertexArray(VAO);
 
     transform();
+
+    unsigned int colorLoc = glGetUniformLocation(shader, "objectColor");
+    glUniform3fv(colorLoc, 1, glm::value_ptr(color));
 
     glDrawElements(GL_TRIANGLES,
         mesh_indices.size(),

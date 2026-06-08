@@ -12,12 +12,18 @@
 #include "model3D/model3D.h"
 #include "Physics/PhysicsParticle.h"
 #include "Physics/PhysicsWorld.h"
+#include "Physics/ForceGenerator/ForceGenerator.h"
+#include "Physics/ForceGenerator/GravityForceGenerator.h"
+#include "Physics/ForceGenerator/DragForceGenerator.h"
+#include "Physics/Springs/AnchoredSpring.h"
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <list>
 #include <chrono>
 
 using namespace std::chrono_literals;
+using namespace Koyu;
 
 int main(void)
 {
@@ -26,16 +32,19 @@ int main(void)
 
     GLFWwindow* window;
 
+    // Create new physics world object
+    PhysicsWorld pWorld = PhysicsWorld();
+
     /* Initialize the library */
     if (!glfwInit())
         return -1;
 
     // Window size variables
-    float windowWidth = 600;
-    float windowHeight = 600;
+    float windowWidth = 800;
+    float windowHeight = 800;
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(windowWidth, windowHeight, "Christian Angelo Olay", NULL, NULL);
+    window = glfwCreateWindow(windowWidth, windowHeight, "GDPHYSX Scratch", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -88,12 +97,42 @@ int main(void)
         -400.0f,
         400.0f);
 
-    // Create object
-    model3D* sphere = new model3D("3D/sphere.obj", glm::vec3(0.f, 0.f, 0.f), shaderProg);
-    sphere->setScale(100.f, 100.f, 100.f);
+    // Create objects
+    /*model3D* sphere = new model3D("3D/sphere.obj", glm::vec3(0.f, 0.f, 0.f), shaderProg);
+    sphere->setScale(30.f, 30.f, 30.f);
+    sphere->setColor(glm::vec3(0.4f, 0.f, 0.4f));*/
 
-    PhysicsParticle* particle = new PhysicsParticle();
-    particle->velocity = glm::vec3(200.f, 0.f, 0.f);
+    glm::vec3 velocity = glm::vec3(0.f, 0.f, 0.f);
+    glm::vec3 force = glm::vec3(6000.f, 0.f, 0.f);    
+
+    PhysicsParticle* p1 = new PhysicsParticle(shaderProg);
+    p1->setColor(glm::vec3(0.4f, 0.f, 0.4f));
+    p1->position = glm::vec3(0.f, 200.f, 0.f);
+    p1->mass = 50.f;
+    p1->addForce(force);
+    pWorld.addParticle(p1);
+
+    /*PhysicsParticle* p2 = new PhysicsParticle(shaderProg);
+    p2->setColor(glm::vec3(0.4f, 0.f, 0.f));
+    p2->position = glm::vec3(-350.f, 200.f, 0.f);
+    p2->velocity = velocity;
+    p2->acceleration = glm::vec3(0.f, 0.f, 0.f);
+    p2->damping = 0.6f;
+    p2->addForce(force);
+    pWorld.addParticle(p2);
+
+    PhysicsParticle* p3 = new PhysicsParticle(shaderProg);
+    p3->setColor(glm::vec3(0.f, 0.4f, 0.f));
+    p3->position = glm::vec3(-350.f, 200.f, 0.f);
+    p3->velocity = velocity;
+    p3->acceleration = glm::vec3(0.f, 0.f, 0.f);
+    p3->damping = 0.9f;
+    p3->addForce(force);
+    pWorld.addParticle(p3);*/
+
+    glm::vec3 springPos = glm::vec3(0.f, 200.f, 0.f);
+    AnchoredSpring aSpring = AnchoredSpring(springPos, 5.f, 0.5f);
+    pWorld.forceRegistry.add(p1, &aSpring);
 
     using clock = std::chrono::high_resolution_clock;
     auto curr_time = clock::now();
@@ -116,14 +155,11 @@ int main(void)
 
             curr_ns -= timestep;
 
-            std::cout << "Physics update" << std::endl;
-            if (particle->position[0] >= 400.f || particle->position[0] <= -400.f)
-            {
-                particle->velocity *= glm::vec3(-1.f, 0.f, 0.f);
-            }
-            particle->update(timestep_sec);
+            //std::cout << "Physics update" << std::endl;
+            pWorld.update(timestep_sec);
+
         }
-        std::cout << "Normal update" << std::endl;
+        //std::cout << "Normal update" << std::endl;
         
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
@@ -177,8 +213,9 @@ int main(void)
             glm::value_ptr(viewMatrix));
 
         // Draw object
-        sphere->updatePosition(particle->position);
-        sphere->draw();
+        p1->draw();
+        //p2->draw();
+        //p3->draw();
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
