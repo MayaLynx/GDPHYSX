@@ -52,13 +52,7 @@ add_executable(GDPHYSX
 
 target_include_directories(GDPHYSX PRIVATE Dependencies/include)
 
-target_link_libraries(GDPHYSX glad_gl_core_43)
-
-target_link_libraries(GDPHYSX glm::glm)
-
-target_link_libraries(GDPHYSX glfw)
-
-target_link_libraries(GDPHYSX OpenGL::GL)
+target_link_libraries(GDPHYSX glad_gl_core_43 glm::glm glfw OpenGL::GL)
 
 enable_testing()
 
