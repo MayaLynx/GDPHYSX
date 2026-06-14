@@ -5,8 +5,13 @@ cmake_policy(SET CMP0072 NEW)
 include(FetchContent)
 
 find_package(OpenGL REQUIRED)
-find_package(glfw3 3.3 REQUIRED)
-find_package(glm CONFIG REQUIRED)
+
+FetchContent_Declare(
+    glfw
+    GIT_REPOSITORY https://github.com/glfw/glfw.git
+    GIT_TAG master
+)
+FetchContent_MakeAvailable(glfw)
 
 FetchContent_Declare(
     glad
