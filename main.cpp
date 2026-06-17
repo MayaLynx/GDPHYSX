@@ -116,22 +116,11 @@ int main(void)
     pWorld.addParticle(p1);
 
     PhysicsParticle* p2 = new PhysicsParticle(shaderProg);
-    p2->setColor(glm::vec3(0.4f, 0.f, 0.f));
-    p2->setScale(glm::vec3(50, 50, 50));
-    p2->position = glm::vec3(50.f, 0.f, 0.f);
+    p2->setColor(glm::vec3(0.f, 0.f, 0.f));
+    p2->setScale(glm::vec3(1, 1, 1));
+    p2->position = glm::vec3(200.f, 0.f, 0.f);
     p2->mass = 100.f;
     pWorld.addParticle(p2);
-
-    p1->addForce(glm::vec3(0.f, 500000.f, 0.f));
-
-    /* PhysicsParticle* p3 = new PhysicsParticle(shaderProg);
-    p3->setColor(glm::vec3(0.f, 0.4f, 0.f));
-    p3->position = glm::vec3(-350.f, 200.f, 0.f);
-    p3->velocity = velocity;
-    p3->acceleration = glm::vec3(0.f, 0.f, 0.f);
-    p3->damping = 0.9f;
-    p3->addForce(force);
-    pWorld.addParticle(p3); */
 
     ParticleContact contact = ParticleContact();
     contact.particles[0] = p1;
@@ -228,9 +217,7 @@ int main(void)
             glm::value_ptr(viewMatrix));
 
         // Draw object
-        p1->draw();
-        p2->draw();
-        //p3->draw();
+        pWorld.draw();
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
