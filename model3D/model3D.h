@@ -13,7 +13,7 @@ class model3D
 {
 private:
 	glm::vec3 position;
-	float scale_x, scale_y, scale_z;
+	glm::vec3 scale;
 	float axis_x, axis_y, axis_z;
 	float theta;
 	std::string path;
@@ -28,8 +28,8 @@ public:
 	void setColor(glm::vec3 newColor);
 	void updatePosition(glm::vec3 newPos);
 	void translate();
-	void setScale(float x, float y, float z);
-	void scale();
+	void setScale(glm::vec3 newScale);
+	void Scale();
 	void rotate();
 	void transform();
 	void draw();

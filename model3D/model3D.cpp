@@ -6,7 +6,7 @@ model3D::model3D(std::string path, glm::vec3 position, GLuint shader)
     , position{ position }
     , shader{ shader }
 {
-    scale_x = scale_y = scale_z = 1.f;
+    scale = glm::vec3(1.f, 1.f, 1.f);
     axis_x = axis_y = 0.f;
     axis_z = 1.f;
     theta = 0.f;
@@ -100,18 +100,16 @@ void model3D::translate()
         glm::value_ptr(transformation_matrix));*/
 }
 
-void model3D::setScale(float x, float y, float z)
+void model3D::setScale(glm::vec3 newScale)
 {
-    scale_x = x;
-    scale_y = y;
-    scale_z = z;
+    scale = newScale;
 }
 
-void model3D::scale()
+void model3D::Scale()
 {
     transformation_matrix = glm::scale(
         transformation_matrix,
-        glm::vec3(scale_x, scale_y, scale_z)
+        scale
     );
 }
 
@@ -127,7 +125,7 @@ void model3D::rotate()
 void model3D::transform()
 {
     translate();
-    scale();
+    Scale();
     rotate();
 
     unsigned int transformLoc = glGetUniformLocation(shader, "transform");
