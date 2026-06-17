@@ -16,6 +16,9 @@
 #include "Physics/ForceGenerator/GravityForceGenerator.h"
 #include "Physics/ForceGenerator/DragForceGenerator.h"
 #include "Physics/Springs/AnchoredSpring.h"
+#include "Physics/ParticleContact.h"
+#include "Physics/ParticleLink.h"
+#include "Physics/Rods/Rod.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -103,36 +106,47 @@ int main(void)
     sphere->setColor(glm::vec3(0.4f, 0.f, 0.4f));*/
 
     glm::vec3 velocity = glm::vec3(0.f, 0.f, 0.f);
-    glm::vec3 force = glm::vec3(6000.f, 0.f, 0.f);    
+    glm::vec3 force = glm::vec3(0.f, 0.f, 0.f);    
 
     PhysicsParticle* p1 = new PhysicsParticle(shaderProg);
     p1->setColor(glm::vec3(0.4f, 0.f, 0.4f));
-    p1->position = glm::vec3(0.f, 200.f, 0.f);
+    p1->setScale(glm::vec3(50.f, 50.f, 50.f));
+    p1->position = glm::vec3(0.f, 0.f, 0.f);
     p1->mass = 50.f;
-    p1->addForce(force);
     pWorld.addParticle(p1);
 
-    /*PhysicsParticle* p2 = new PhysicsParticle(shaderProg);
+    PhysicsParticle* p2 = new PhysicsParticle(shaderProg);
     p2->setColor(glm::vec3(0.4f, 0.f, 0.f));
-    p2->position = glm::vec3(-350.f, 200.f, 0.f);
-    p2->velocity = velocity;
-    p2->acceleration = glm::vec3(0.f, 0.f, 0.f);
-    p2->damping = 0.6f;
-    p2->addForce(force);
+    p2->setScale(glm::vec3(50, 50, 50));
+    p2->position = glm::vec3(50.f, 0.f, 0.f);
+    p2->mass = 100.f;
     pWorld.addParticle(p2);
 
-    PhysicsParticle* p3 = new PhysicsParticle(shaderProg);
+    p1->addForce(glm::vec3(0.f, 500000.f, 0.f));
+
+    /* PhysicsParticle* p3 = new PhysicsParticle(shaderProg);
     p3->setColor(glm::vec3(0.f, 0.4f, 0.f));
     p3->position = glm::vec3(-350.f, 200.f, 0.f);
     p3->velocity = velocity;
     p3->acceleration = glm::vec3(0.f, 0.f, 0.f);
     p3->damping = 0.9f;
     p3->addForce(force);
-    pWorld.addParticle(p3);*/
+    pWorld.addParticle(p3); */
 
-    glm::vec3 springPos = glm::vec3(0.f, 200.f, 0.f);
-    AnchoredSpring aSpring = AnchoredSpring(springPos, 5.f, 0.5f);
-    pWorld.forceRegistry.add(p1, &aSpring);
+    ParticleContact contact = ParticleContact();
+    contact.particles[0] = p1;
+    contact.particles[1] = p2;
+
+    contact.contactNormal = p1->position - p2->position;
+    contact.contactNormal = glm::normalize(contact.contactNormal);
+    contact.restitution = 1;
+
+    Rod* r = new Rod();
+    r->particles[0] = p1;
+    r->particles[1] = p2;
+    r->length = 200;
+
+    pWorld.links.push_back(r);
 
     using clock = std::chrono::high_resolution_clock;
     auto curr_time = clock::now();
@@ -157,6 +171,7 @@ int main(void)
 
             //std::cout << "Physics update" << std::endl;
             pWorld.update(timestep_sec);
+            contact.resolve(timestep_sec);
 
         }
         //std::cout << "Normal update" << std::endl;
@@ -214,7 +229,7 @@ int main(void)
 
         // Draw object
         p1->draw();
-        //p2->draw();
+        p2->draw();
         //p3->draw();
 
         /* Swap front and back buffers */

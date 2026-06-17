@@ -56,7 +56,11 @@ add_executable(GDPHYSX
     Physics/ParticleContact.cpp
     Physics/ParticleContact.h
     Physics/ContactResolver.h
-    Physics/ContactResolver.cpp)
+    Physics/ContactResolver.cpp
+    Physics/ParticleLink.h
+    Physics/ParticleLink.cpp
+    Physics/Rods/Rod.h
+    Physics/Rods/Rod.cpp)
 
 
 target_include_directories(GDPHYSX PRIVATE Dependencies/include)

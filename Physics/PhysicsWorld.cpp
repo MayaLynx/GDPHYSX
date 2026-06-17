@@ -20,8 +20,25 @@ namespace Koyu
 		contacts.push_back(toAdd);
     }
 
+    void PhysicsWorld::generateContacts()
+    {
+		contacts.clear();
+
+		for (std::list<ParticleLink*>::iterator i = links.begin();
+			i != links.end();
+			i++)
+			{
+				ParticleContact* contact = (*i)->getContact();
+
+				if (contact != nullptr)
+				{
+					contacts.push_back(contact);
+				}
+			}
+    }
+
     void PhysicsWorld::updateParticleList()
-	{
+    {
 		// Removes all particles in list where isDestroyed is true
 		Particles.remove_if(
 			[](PhysicsParticle* p)
@@ -42,6 +59,8 @@ namespace Koyu
 		{
 			(*p)->update(time);
 		}
+
+		generateContacts();
 
 		// Only call resolve contacts when there are contacts
 		if (contacts.size() > 0)

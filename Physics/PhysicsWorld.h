@@ -2,6 +2,7 @@
 #include "PhysicsParticle.h"
 #include "ParticleContact.h"
 #include "ContactResolver.h"
+#include "ParticleLink.h"
 #include "ForceGenerator/ForceRegistry.h"
 #include "ForceGenerator/GravityForceGenerator.h"
 #include <list>
@@ -12,6 +13,7 @@ namespace Koyu
 	{
 		protected:
 			ContactResolver contactResolver = ContactResolver(20);
+			void generateContacts();
 		
 		private:
 			void updateParticleList();
@@ -21,6 +23,7 @@ namespace Koyu
 			std::list<PhysicsParticle*> Particles; // Holds all the particles
 			ForceRegistry forceRegistry;
 			std::vector<ParticleContact*> contacts;
+			std::list<ParticleLink*> links;
 
 			void addParticle(PhysicsParticle* toAdd);
 			void addContact(PhysicsParticle* p1, PhysicsParticle* p2, float restitution, glm::vec3 contactNormal);
