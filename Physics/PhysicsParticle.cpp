@@ -6,7 +6,7 @@ namespace Koyu
 		: shader{shader}
 	{
 		model = new model3D("3D/sphere.obj", glm::vec3(0.f, 0.f, 0.f), shader);
-		model->setScale(20.f, 20.f, 20.f);
+		model->setScale(glm::vec3(20.f, 20.f, 20.f));
 
 		this->position = glm::vec3(0.f, 0.f, 0.f);
 		this->velocity = glm::vec3(0.f, 0.f, 0.f);
@@ -19,6 +19,11 @@ namespace Koyu
 	void PhysicsParticle::setColor(glm::vec3 newColor)
 	{
 		model->setColor(newColor);
+	}
+
+	void PhysicsParticle::setScale(glm::vec3 newScale)
+	{
+		model->setScale(newScale);
 	}
 
 	void PhysicsParticle::destroy()

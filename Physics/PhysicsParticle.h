@@ -32,6 +32,7 @@ namespace Koyu
 		void resetForce();
 
 		void setColor(glm::vec3 newColor);
+		void setScale(glm::vec3 newScale);
 		void destroy();
 		bool IsDestroyed();
 		void update(float time);
