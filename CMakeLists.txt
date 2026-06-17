@@ -52,7 +52,9 @@ add_executable(GDPHYSX
     Physics/ForceGenerator/DragForceGenerator.cpp
     Physics/ForceGenerator/DragForceGenerator.h
     Physics/Springs/AnchoredSpring.cpp
-    Physics/Springs/AnchoredSpring.h)
+    Physics/Springs/AnchoredSpring.h
+    Physics/ParticleContact.cpp
+    Physics/ParticleContact.h)
 
 
 target_include_directories(GDPHYSX PRIVATE Dependencies/include)

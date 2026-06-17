@@ -8,7 +8,19 @@ namespace Koyu
 		forceRegistry.add(toAdd, &gravity);
 	}
 
-	void PhysicsWorld::updateParticleList()
+    void PhysicsWorld::addContact(PhysicsParticle *p1, PhysicsParticle *p2, float restitution, glm::vec3 contactNormal)
+    {
+		ParticleContact *toAdd = new ParticleContact();
+
+		toAdd->particles[0] = p1;
+		toAdd->particles[1] = p2;
+		toAdd->restitution = restitution;
+		toAdd->contactNormal = contactNormal;
+
+		contacts.push_back(toAdd);
+    }
+
+    void PhysicsWorld::updateParticleList()
 	{
 		// Removes all particles in list where isDestroyed is true
 		Particles.remove_if(

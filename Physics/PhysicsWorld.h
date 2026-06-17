@@ -1,5 +1,6 @@
 #pragma once
 #include "PhysicsParticle.h"
+#include "ParticleContact.h"
 #include "ForceGenerator/ForceRegistry.h"
 #include "ForceGenerator/GravityForceGenerator.h"
 #include <list>
@@ -15,8 +16,10 @@ namespace Koyu
 	public:
 		std::list<PhysicsParticle*> Particles; // Holds all the particles
 		ForceRegistry forceRegistry;
+		std::vector<ParticleContact*> contacts;
 
 		void addParticle(PhysicsParticle* toAdd);
+		void addContact(PhysicsParticle* p1, PhysicsParticle* p2, float restitution, glm::vec3 contactNormal);
 		void update(float time);
 	};
 }
