@@ -31,7 +31,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(glm)
 
-add_executable(GDPHYSX
+add_executable(GDPHYSX WIN32
     main.cpp
     main.h
     glad.c
