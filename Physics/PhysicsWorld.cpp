@@ -49,4 +49,11 @@ namespace Koyu
 			contactResolver.resolveContacts(contacts, time);
 		}
 	}
+    void PhysicsWorld::draw()
+    {
+		for (PhysicsParticle* p : Particles)
+		{
+			p->draw();
+		}
+    }
 }

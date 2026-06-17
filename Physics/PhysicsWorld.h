@@ -25,6 +25,7 @@ namespace Koyu
 			void addParticle(PhysicsParticle* toAdd);
 			void addContact(PhysicsParticle* p1, PhysicsParticle* p2, float restitution, glm::vec3 contactNormal);
 			void update(float time);
+			void draw();
 		};
 }
 
