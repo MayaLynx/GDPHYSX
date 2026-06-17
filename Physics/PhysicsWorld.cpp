@@ -42,5 +42,11 @@ namespace Koyu
 		{
 			(*p)->update(time);
 		}
+
+		// Only call resolve contacts when there are contacts
+		if (contacts.size() > 0)
+		{
+			contactResolver.resolveContacts(contacts, time);
+		}
 	}
 }

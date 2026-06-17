@@ -54,7 +54,9 @@ add_executable(GDPHYSX
     Physics/Springs/AnchoredSpring.cpp
     Physics/Springs/AnchoredSpring.h
     Physics/ParticleContact.cpp
-    Physics/ParticleContact.h)
+    Physics/ParticleContact.h
+    Physics/ContactResolver.h
+    Physics/ContactResolver.cpp)
 
 
 target_include_directories(GDPHYSX PRIVATE Dependencies/include)
