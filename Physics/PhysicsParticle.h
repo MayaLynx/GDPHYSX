@@ -22,6 +22,8 @@ namespace Koyu
 		glm::vec3 velocity;
 		glm::vec3 acceleration;
 		float mass;
+		float radius;
+		float restitution;
 		model3D* model;
 		GLuint shader;
 		float damping;
@@ -33,6 +35,7 @@ namespace Koyu
 
 		void setColor(glm::vec3 newColor);
 		void setScale(glm::vec3 newScale);
+		void setRadius(float newRadius);
 		void destroy();
 		bool IsDestroyed();
 		void update(float time);

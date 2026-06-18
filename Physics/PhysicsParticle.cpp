@@ -12,6 +12,8 @@ namespace Koyu
 		this->velocity = glm::vec3(0.f, 0.f, 0.f);
 		this->acceleration = glm::vec3(0.f, 0.f, 0.f);
 		this->mass = 1.f;
+		this->radius = 10.f;
+		this->restitution = 1.f;
 		this->damping = 0.9f;
 		this->accumulatedForce = glm::vec3(0.f, 0.f, 0.f);
 	}
@@ -26,7 +28,13 @@ namespace Koyu
 		model->setScale(newScale);
 	}
 
-	void PhysicsParticle::destroy()
+    void PhysicsParticle::setRadius(float newRadius)
+    {
+		radius = newRadius;
+		model->setScale(glm::vec3(radius, radius, radius)); // Rescales the sphere using the radius
+    }
+
+    void PhysicsParticle::destroy()
 	{
 		isDestroyed = true;
 	}

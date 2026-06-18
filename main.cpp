@@ -110,32 +110,35 @@ int main(void)
 
     PhysicsParticle* p1 = new PhysicsParticle(shaderProg);
     p1->setColor(glm::vec3(0.4f, 0.f, 0.4f));
-    p1->setScale(glm::vec3(50.f, 50.f, 50.f));
-    p1->position = glm::vec3(0.f, 0.f, 0.f);
+    p1->setRadius(50.f);
+    p1->position = glm::vec3(-200.f, 0.f, 0.f);
     p1->mass = 50.f;
     pWorld.addParticle(p1);
 
     PhysicsParticle* p2 = new PhysicsParticle(shaderProg);
-    p2->setColor(glm::vec3(0.f, 0.f, 0.f));
-    p2->setScale(glm::vec3(1, 1, 1));
+    p2->setColor(glm::vec3(0.4f, 0.f, 0.f));
+    p2->setRadius(50.f);
     p2->position = glm::vec3(200.f, 0.f, 0.f);
-    p2->mass = 100.f;
+    p2->mass = 50.f;
     pWorld.addParticle(p2);
 
-    ParticleContact contact = ParticleContact();
-    contact.particles[0] = p1;
-    contact.particles[1] = p2;
+    // ParticleContact contact = ParticleContact();
+    // contact.particles[0] = p1;
+    // contact.particles[1] = p2;
 
-    contact.contactNormal = p1->position - p2->position;
-    contact.contactNormal = glm::normalize(contact.contactNormal);
-    contact.restitution = 1;
+    // contact.contactNormal = p1->position - p2->position;
+    // contact.contactNormal = glm::normalize(contact.contactNormal);
+    // contact.restitution = 1;
 
-    Rod* r = new Rod();
-    r->particles[0] = p1;
-    r->particles[1] = p2;
-    r->length = 200;
+    // Rod* r = new Rod();
+    // r->particles[0] = p1;
+    // r->particles[1] = p2;
+    // r->length = 200;
 
-    pWorld.links.push_back(r);
+    // pWorld.links.push_back(r);
+
+    p1->addForce(glm::vec3(500000, 0, 0));
+    p2->addForce(glm::vec3(-500000, 0, 0));
 
     using clock = std::chrono::high_resolution_clock;
     auto curr_time = clock::now();
@@ -160,7 +163,7 @@ int main(void)
 
             //std::cout << "Physics update" << std::endl;
             pWorld.update(timestep_sec);
-            contact.resolve(timestep_sec);
+            // contact.resolve(timestep_sec);
 
         }
         //std::cout << "Normal update" << std::endl;

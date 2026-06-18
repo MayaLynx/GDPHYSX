@@ -14,6 +14,7 @@ namespace Koyu
 		protected:
 			ContactResolver contactResolver = ContactResolver(20);
 			void generateContacts();
+			void getOverlaps();
 		
 		private:
 			void updateParticleList();
@@ -26,7 +27,7 @@ namespace Koyu
 			std::list<ParticleLink*> links;
 
 			void addParticle(PhysicsParticle* toAdd);
-			void addContact(PhysicsParticle* p1, PhysicsParticle* p2, float restitution, glm::vec3 contactNormal);
+			void addContact(PhysicsParticle* p1, PhysicsParticle* p2, float restitution, glm::vec3 contactNormal, float depth);
 			void update(float time);
 			void draw();
 		};
