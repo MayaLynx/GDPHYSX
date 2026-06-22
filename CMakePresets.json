@@ -12,6 +12,34 @@
                 "CMAKE_CXX_COMPILER": "/usr/bin/g++",
                 "CMAKE_BUILD_TYPE": "Debug"
             }
+        },
+        {
+            "name": "Release",
+            "displayName": "Release",
+            "description": "Using compilers: C = /usr/bin/gcc, CXX = /usr/bin/g++",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_C_COMPILER": "/usr/bin/gcc",
+                "CMAKE_CXX_COMPILER": "/usr/bin/g++",
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "GDPHYSX-Debug",
+            "description": "Debug build",
+            "displayName": "Debug",
+            "configurePreset": "GDPHYSX",
+            "configuration": "Debug"
+        },
+        {
+            "name": "GDPHYSX-Release",
+            "description": "Release build",
+            "displayName": "Release",
+            "configurePreset": "Release",
+            "configuration": "Release"
         }
     ]
 }
