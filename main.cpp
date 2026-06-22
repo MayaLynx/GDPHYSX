@@ -9,7 +9,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "main.h"
-#include "model3D/model3D.h"
 #include "Physics/PhysicsParticle.h"
 #include "Physics/PhysicsWorld.h"
 #include "Physics/ForceGenerator/ForceGenerator.h"
@@ -19,6 +18,7 @@
 #include "Physics/ParticleContact.h"
 #include "Physics/ParticleLink.h"
 #include "Physics/Rods/Rod.h"
+#include "Physics/Rods/Chain.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -47,7 +47,7 @@ int main(void)
     float windowHeight = 800;
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(windowWidth, windowHeight, "GDPHYSX Scratch", NULL, NULL);
+    window = glfwCreateWindow(windowWidth, windowHeight, "Assignment4 Christian Angelo Olay", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -100,45 +100,21 @@ int main(void)
         -400.0f,
         400.0f);
 
-    // Create objects
-    /*model3D* sphere = new model3D("3D/sphere.obj", glm::vec3(0.f, 0.f, 0.f), shaderProg);
-    sphere->setScale(30.f, 30.f, 30.f);
-    sphere->setColor(glm::vec3(0.4f, 0.f, 0.4f));*/
-
-    glm::vec3 velocity = glm::vec3(0.f, 0.f, 0.f);
-    glm::vec3 force = glm::vec3(0.f, 0.f, 0.f);    
-
+    // Create objects/particles
     PhysicsParticle* p1 = new PhysicsParticle(shaderProg);
     p1->setColor(glm::vec3(0.4f, 0.f, 0.4f));
     p1->setRadius(50.f);
-    p1->position = glm::vec3(-200.f, 0.f, 0.f);
+    p1->position = glm::vec3(0.f, 100.f, 0.f);
     p1->mass = 50.f;
     pWorld.addParticle(p1);
 
-    PhysicsParticle* p2 = new PhysicsParticle(shaderProg);
-    p2->setColor(glm::vec3(0.4f, 0.f, 0.f));
-    p2->setRadius(50.f);
-    p2->position = glm::vec3(200.f, 0.f, 0.f);
-    p2->mass = 50.f;
-    pWorld.addParticle(p2);
+    // Create chain that's linked to p1 particle
+    Chain* chain = new Chain();
+    chain->particles[0] = p1;
+    chain->length = 200;
+    chain->anchorPoint = glm::vec3(0.f, 100.f, 0.f);
 
-    // ParticleContact contact = ParticleContact();
-    // contact.particles[0] = p1;
-    // contact.particles[1] = p2;
-
-    // contact.contactNormal = p1->position - p2->position;
-    // contact.contactNormal = glm::normalize(contact.contactNormal);
-    // contact.restitution = 1;
-
-    // Rod* r = new Rod();
-    // r->particles[0] = p1;
-    // r->particles[1] = p2;
-    // r->length = 200;
-
-    // pWorld.links.push_back(r);
-
-    p1->addForce(glm::vec3(500000, 0, 0));
-    p2->addForce(glm::vec3(-500000, 0, 0));
+    pWorld.links.push_back(chain);
 
     using clock = std::chrono::high_resolution_clock;
     auto curr_time = clock::now();
@@ -163,7 +139,6 @@ int main(void)
 
             //std::cout << "Physics update" << std::endl;
             pWorld.update(timestep_sec);
-            // contact.resolve(timestep_sec);
 
         }
         //std::cout << "Normal update" << std::endl;

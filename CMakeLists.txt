@@ -60,7 +60,9 @@ add_executable(GDPHYSX WIN32
     Physics/ParticleLink.h
     Physics/ParticleLink.cpp
     Physics/Rods/Rod.h
-    Physics/Rods/Rod.cpp)
+    Physics/Rods/Rod.cpp
+    Physics/Rods/Chain.h
+    Physics/Rods/Chain.cpp)
 
 
 target_include_directories(GDPHYSX PRIVATE Dependencies/include)
