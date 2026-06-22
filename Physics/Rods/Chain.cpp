@@ -20,11 +20,6 @@ ParticleContact* Chain::getContact()
         ret->contactNormal = dir;
         ret->depth = currLen - length;
     }
-    // else
-    // {
-    //     ret->contactNormal = dir * glm::vec3(-1);
-    //     ret->depth = length - currLen;
-    // }
     ret->restitution = restitution;
 
     return ret;
