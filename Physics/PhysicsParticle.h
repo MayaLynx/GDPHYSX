@@ -29,6 +29,7 @@ namespace Koyu
 		float damping;
 
 		PhysicsParticle(GLuint shader);
+		PhysicsParticle(GLuint shader, std::string texturePath, bool hasAlpha);
 
 		void addForce(glm::vec3 force);
 		void resetForce();

@@ -18,6 +18,21 @@ namespace Koyu
 		this->accumulatedForce = glm::vec3(0.f, 0.f, 0.f);
 	}
 
+	PhysicsParticle::PhysicsParticle(GLuint shader, std::string texturePath, bool hasAlpha)
+	{
+		model = new model3D("3D/sphere.obj", texturePath, glm::vec3(0.f, 0.f, 0.f), shader, hasAlpha);
+		model->setScale(glm::vec3(20.f, 20.f, 20.f));
+
+		this->position = glm::vec3(0.f, 0.f, 0.f);
+		this->velocity = glm::vec3(0.f, 0.f, 0.f);
+		this->acceleration = glm::vec3(0.f, 0.f, 0.f);
+		this->mass = 1.f;
+		this->radius = 10.f;
+		this->restitution = 1.f;
+		this->damping = 0.9f;
+		this->accumulatedForce = glm::vec3(0.f, 0.f, 0.f);
+	}
+
 	void PhysicsParticle::setColor(glm::vec3 newColor)
 	{
 		model->setColor(newColor);
