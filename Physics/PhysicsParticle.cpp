@@ -11,11 +11,14 @@ namespace Koyu
 		this->position = glm::vec3(0.f, 0.f, 0.f);
 		this->velocity = glm::vec3(0.f, 0.f, 0.f);
 		this->acceleration = glm::vec3(0.f, 0.f, 0.f);
+		this->angularVelocity = glm::vec3(0.f, 0.f, 0.f);
+		this->angularDamping = 0.9f;
 		this->mass = 1.f;
 		this->radius = 10.f;
 		this->restitution = 1.f;
 		this->damping = 0.9f;
 		this->accumulatedForce = glm::vec3(0.f, 0.f, 0.f);
+		this->accumulatedTorque = glm::vec3(0.f, 0.f, 0.f);
 	}
 
 	PhysicsParticle::PhysicsParticle(GLuint shader, std::string texturePath, bool hasAlpha)
@@ -26,11 +29,14 @@ namespace Koyu
 		this->position = glm::vec3(0.f, 0.f, 0.f);
 		this->velocity = glm::vec3(0.f, 0.f, 0.f);
 		this->acceleration = glm::vec3(0.f, 0.f, 0.f);
+		this->angularVelocity = glm::vec3(0.f, 0.f, 0.f);
+		this->angularDamping = 0.9f;
 		this->mass = 1.f;
 		this->radius = 10.f;
 		this->restitution = 1.f;
 		this->damping = 0.9f;
 		this->accumulatedForce = glm::vec3(0.f, 0.f, 0.f);
+		this->accumulatedTorque = glm::vec3(0.f, 0.f, 0.f);
 	}
 
 	void PhysicsParticle::setColor(glm::vec3 newColor)
@@ -73,11 +79,23 @@ namespace Koyu
 
 		this->acceleration -= accumulatedForce * (1 / d_mass);
 		this->accumulatedForce = glm::vec3(0.f, 0.f, 0.f);
+		this->accumulatedTorque = glm::vec3(0.f, 0.f, 0.f);
+	}
+
+	void PhysicsParticle::addForceAtPoint(glm::vec3 force, glm::vec3 p)
+	{
+		this->addForce(force);
+		this->accumulatedTorque = glm::cross(p, force);
 	}
 
 	void PhysicsParticle::updatePosition(float deltaTime)
 	{
 		this->position = this->position + (this->velocity * deltaTime) + ((1.0f / 2.0f) * (this->acceleration * deltaTime * deltaTime));
+
+		// Get the angular velocity given time
+		glm::vec3 angularV = angularVelocity * deltaTime;
+		// Rotate the model by given amount
+		this->rotation = this->rotation * angularV;
 	}
 
 	void PhysicsParticle::updateVelocity(float deltaTime)
@@ -91,6 +109,12 @@ namespace Koyu
 
 		this->velocity = this->velocity + (this->acceleration * deltaTime);
 		this->velocity = this->velocity * powf(damping, deltaTime);
+
+		// Get moment of inertia
+		float mI = momentOfInertia();
+		angularVelocity += accumulatedTorque * deltaTime * ((float)1 / mI);
+		// Add in dampening similar to position velocity
+		angularVelocity = angularVelocity * powf(angularDamping, deltaTime);
 	}
 
 	void PhysicsParticle::update(float time)
@@ -100,6 +124,12 @@ namespace Koyu
 		this->resetForce();
 
 		model->updatePosition(this->position);
+	}
+
+	float PhysicsParticle::momentOfInertia()
+	{
+		// Formula for MoI for spheres
+		return ((float)2 / 5) * mass * radius * radius;
 	}
 
 	void PhysicsParticle::draw()

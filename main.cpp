@@ -4,9 +4,12 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -111,11 +114,11 @@ int main(void)
     p1->mass = 50.f;
     pWorld.addParticle(p1);
 
-    PhysicsParticle* p2 = new PhysicsParticle(shaderProg, "3D/brickwall.jpg", false);
-    p2->setRadius(50.f);
-    p2->position = glm::vec3(150.f, 100.f, 0.f);
-    p1->mass = 50.f;
-    pWorld.addParticle(p2);
+    p1->addForceAtPoint(glm::vec3(
+            -1, 0, 0
+        ) * glm::vec3(100000),
+        glm::vec3(0, 0, 0) 
+    );
 
     // Create chain that's linked to p1 particle
     Chain* chain = new Chain();
