@@ -18,7 +18,7 @@ namespace Koyu
             // From the center to the edge
             glm::vec3 halfExtents;
 
-            PhysicsCube();
-            PhysicsCube(glm::vec3 _halfExtents);
+            PhysicsCube(GLuint shader);
+            PhysicsCube(GLuint shader, glm::vec3 _halfExtents);
     };
 }

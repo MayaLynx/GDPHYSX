@@ -21,8 +21,12 @@ namespace Koyu
 		this->accumulatedTorque = glm::vec3(0.f, 0.f, 0.f);
 	}
 
-	PhysicsParticle::PhysicsParticle(GLuint shader, std::string texturePath, bool hasAlpha)
-	{
+    PhysicsParticle::PhysicsParticle()
+    {
+    }
+
+    PhysicsParticle::PhysicsParticle(GLuint shader, std::string texturePath, bool hasAlpha)
+    {
 		model = new model3D("3D/sphere.obj", texturePath, glm::vec3(0.f, 0.f, 0.f), shader, hasAlpha);
 		model->setScale(glm::vec3(20.f, 20.f, 20.f));
 
@@ -132,7 +136,11 @@ namespace Koyu
 		return ((float)2 / 5) * mass * radius * radius;
 	}
 
-	void PhysicsParticle::draw()
+    void PhysicsParticle::updateAngularVelocity(float deltaTime)
+    {
+    }
+
+    void PhysicsParticle::draw()
 	{
 		if (isDestroyed) return; // Stop rendering if destroyed
 		model->draw();

@@ -1,14 +1,40 @@
 #include "PhysicsCube.h"
 
-Koyu::PhysicsCube::PhysicsCube()
+Koyu::PhysicsCube::PhysicsCube(GLuint shader)
 {
+    model = new model3D("3D/cube.obj", glm::vec3(0.f, 0.f, 0.f), shader);
     // 1x1x1 Cube
     halfExtents = glm::vec3(0.5f);
+
+    this->position = glm::vec3(0.f, 0.f, 0.f);
+    this->velocity = glm::vec3(0.f, 0.f, 0.f);
+    this->acceleration = glm::vec3(0.f, 0.f, 0.f);
+    this->angularVelocity = glm::vec3(0.f, 0.f, 0.f);
+    this->angularDamping = 0.9f;
+    this->mass = 1.f;
+    this->restitution = 1.f;
+    this->damping = 0.9f;
+    this->accumulatedForce = glm::vec3(0.f, 0.f, 0.f);
+    this->accumulatedTorque = glm::vec3(0.f, 0.f, 0.f);
 }
 
-Koyu::PhysicsCube::PhysicsCube(glm::vec3 _halfExtents)
+Koyu::PhysicsCube::PhysicsCube(GLuint shader, glm::vec3 _halfExtents)
 {
+    model = new model3D("3D/cube.obj", glm::vec3(0.f, 0.f, 0.f), shader);
     halfExtents = _halfExtents;
+
+    model->setScale(glm::vec3(halfExtents * 2.f));
+
+    this->position = glm::vec3(0.f, 0.f, 0.f);
+    this->velocity = glm::vec3(0.f, 0.f, 0.f);
+    this->acceleration = glm::vec3(0.f, 0.f, 0.f);
+    this->angularVelocity = glm::vec3(0.f, 0.f, 0.f);
+    this->angularDamping = 0.9f;
+    this->mass = 1.f;
+    this->restitution = 1.f;
+    this->damping = 0.9f;
+    this->accumulatedForce = glm::vec3(0.f, 0.f, 0.f);
+    this->accumulatedTorque = glm::vec3(0.f, 0.f, 0.f);
 }
 
 

@@ -40,6 +40,7 @@ namespace Koyu
 		glm::vec3 angularVelocity;
 		float angularDamping;
 
+		PhysicsParticle();
 		PhysicsParticle(GLuint shader);
 		PhysicsParticle(GLuint shader, std::string texturePath, bool hasAlpha);
 

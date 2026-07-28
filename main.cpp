@@ -17,6 +17,7 @@
 #include "main.h"
 #include "Physics/PhysicsParticle.h"
 #include "Physics/PhysicsWorld.h"
+#include "Physics/PhysicsCube.h"
 #include "Physics/ForceGenerator/ForceGenerator.h"
 #include "Physics/ForceGenerator/GravityForceGenerator.h"
 #include "Physics/ForceGenerator/DragForceGenerator.h"
@@ -119,6 +120,12 @@ int main(void)
         ) * glm::vec3(100000),
         glm::vec3(0, 0, 0) 
     );
+
+    PhysicsCube* p2 = new PhysicsCube(shaderProg, glm::vec3(60, 30, 30));
+    p2->setColor(glm::vec3(0.7f, 0.f, 0.f));
+    p2->position = glm::vec3(-100, 100, 0);
+    p2->mass = 50.f;
+    pWorld.addParticle(p2);
 
     // Create chain that's linked to p1 particle
     Chain* chain = new Chain();

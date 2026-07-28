@@ -43,6 +43,7 @@ add_executable(GDPHYSX WIN32
     Physics/PhysicsParticle.h
     Physics/PhysicsWorld.cpp
     Physics/PhysicsWorld.h
+    Physics/PhysicsCube.cpp
     Physics/ForceGenerator/ForceGenerator.cpp
     Physics/ForceGenerator/ForceGenerator.h
     Physics/ForceGenerator/ForceRegistry.cpp
